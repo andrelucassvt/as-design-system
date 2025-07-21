@@ -13,6 +13,9 @@ class AsNavbar extends StatefulWidget {
     this.colorSelected,
     this.scrollController,
     this.enableBorder = false,
+    this.padding,
+    this.backgroundColor,
+    this.colorItemSelected,
   });
   final List<AsNavIcon> navIcons;
   final AsNavIcon? floatingIconRight;
@@ -20,6 +23,9 @@ class AsNavbar extends StatefulWidget {
   final Color? colorSelected;
   final ScrollController? scrollController;
   final bool enableBorder;
+  final EdgeInsetsGeometry? padding;
+  final Color? backgroundColor;
+  final Color? colorItemSelected;
 
   @override
   State<AsNavbar> createState() => _AsNavbarState();
@@ -57,7 +63,7 @@ class _AsNavbarState extends State<AsNavbar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 10),
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 500),
         switchInCurve: Curves.easeInCubic,
@@ -75,6 +81,7 @@ class _AsNavbarState extends State<AsNavbar> {
             ? InkWell(
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
+
                 onTap: () {
                   setState(() {
                     isScroll = false;
@@ -89,6 +96,7 @@ class _AsNavbarState extends State<AsNavbar> {
                     children: [
                       AsBaseContainer(
                         shape: BoxShape.circle,
+                        color: widget.backgroundColor,
                         enableBorder: widget.enableBorder,
                         elevation: 1,
                         width: 50,
@@ -106,12 +114,14 @@ class _AsNavbarState extends State<AsNavbar> {
             : Row(
                 key: const ValueKey('navbar'),
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
                     child: AsBaseContainer(
                       padding: const EdgeInsets.all(5),
                       enableBorder: widget.enableBorder,
                       elevation: 1,
+                      color: widget.backgroundColor,
                       constraints: BoxConstraints(maxHeight: 70, minHeight: 70),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -135,7 +145,10 @@ class _AsNavbarState extends State<AsNavbar> {
                                     ? widget.colorSelected ??
                                           Colors.grey.withValues(alpha: .3)
                                     : Colors.transparent,
-                                child: _onTapIcon(item.value),
+                                child: _onTapIcon(
+                                  item.value,
+                                  isSelected: isSelected,
+                                ),
                               ),
                             ),
                           );
@@ -154,6 +167,7 @@ class _AsNavbarState extends State<AsNavbar> {
                         width: 60,
                         height: 60,
                         elevation: 1,
+                        color: widget.backgroundColor,
                         enableBorder: widget.enableBorder,
                         child: _onTapIcon(widget.floatingIconRight!),
                       ),
@@ -165,29 +179,33 @@ class _AsNavbarState extends State<AsNavbar> {
     );
   }
 
-  Widget _iconBase(AsNavIcon item, {double? size}) {
+  Widget _iconBase(AsNavIcon item, {double? size, bool isSelected = false}) {
     return IconTheme(
       data: IconThemeData(
-        color: AsColorBase.iconColor(context),
+        color: isSelected
+            ? widget.colorItemSelected ?? AsColorBase.iconColor(context)
+            : AsColorBase.iconColor(context),
         size: size ?? (item.title != null ? 20 : 26),
       ),
       child: item.icon,
     );
   }
 
-  Widget _onTapIcon(AsNavIcon item) {
+  Widget _onTapIcon(AsNavIcon item, {bool isSelected = false}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _iconBase(item),
+        _iconBase(item, isSelected: isSelected),
         if (item.title != null)
           Text(
             item.title!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: AsColorBase.textColor(context),
+              color: isSelected
+                  ? widget.colorItemSelected ?? AsColorBase.textColor(context)
+                  : AsColorBase.textColor(context),
               fontSize: 12,
             ),
           ),

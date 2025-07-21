@@ -62,10 +62,10 @@ class _ButtonsPageState extends State<ButtonsPage> {
           ],
         ),
         const SizedBox(height: 20),
-        AsButton(
-          onPressed: () {},
-          child: CircularProgressIndicator(color: Colors.blue),
-        ),
+        // AsButton(
+        //   onPressed: () {},
+        //   child: CircularProgressIndicator(color: Colors.blue),
+        // ),
         const SizedBox(height: 20),
         AsMenuButtons(
           items: [

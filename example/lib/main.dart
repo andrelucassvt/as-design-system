@@ -83,12 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
               alignment: Alignment.bottomCenter,
               child: AsNavbar(
                 key: Key('navbar $_selectedIndex'),
+                backgroundColor: Colors.blueAccent,
+                colorSelected: Colors.white,
                 indexSelected: _selectedIndex,
                 scrollController: _scrollControllers[_selectedIndex],
-                floatingIconRight: AsNavIcon(
-                  icon: Icon(Icons.home),
-                  onTap: () {},
-                ),
                 navIcons: [
                   AsNavIcon(
                     title: 'Buttons',
@@ -117,15 +115,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     },
                   ),
-                  AsNavIcon(
-                    title: 'Settings',
-                    icon: Icon(Icons.settings),
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = 3;
-                      });
-                    },
-                  ),
+                  // AsNavIcon(
+                  //   title: 'Settings',
+                  //   icon: Icon(Icons.settings),
+                  //   onTap: () {
+                  //     setState(() {
+                  //       _selectedIndex = 3;
+                  //     });
+                  //   },
+                  // ),
                 ],
               ),
             ),
