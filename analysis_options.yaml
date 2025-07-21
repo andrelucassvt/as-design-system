@@ -1,0 +1,15 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Encourage trailing commas for better formatting
+    require_trailing_commas: true
+    # Prefer single quotes
+    prefer_single_quotes: true
+    # Avoid unnecessary parentheses
+    avoid_unnecessary_containers: true
+    # Use trailing commas for all function calls and declarations
+    always_put_control_body_on_new_line: true
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options

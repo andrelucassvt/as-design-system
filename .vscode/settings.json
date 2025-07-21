@@ -1,0 +1,20 @@
+{
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [100],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "dart.lineLength": 80,
+  "dart.enableSdkFormatter": true,
+  "dart.insertArgumentPlaceholders": false,
+  "dart.previewLsp": true,
+  "dart.updateImportsOnRename": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  }
+}
