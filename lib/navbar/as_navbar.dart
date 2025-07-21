@@ -145,13 +145,18 @@ class _AsNavbarState extends State<AsNavbar> {
                   ),
                   if (widget.floatingIconRight != null) ...[
                     const SizedBox(width: 5),
-                    AsBaseContainer(
-                      shape: BoxShape.circle,
-                      width: 60,
-                      height: 60,
-                      elevation: 1,
-                      enableBorder: widget.enableBorder,
-                      child: _onTapIcon(widget.floatingIconRight!),
+                    InkWell(
+                      onTap: widget.floatingIconRight!.onTap,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      child: AsBaseContainer(
+                        shape: BoxShape.circle,
+                        width: 60,
+                        height: 60,
+                        elevation: 1,
+                        enableBorder: widget.enableBorder,
+                        child: _onTapIcon(widget.floatingIconRight!),
+                      ),
                     ),
                   ],
                 ],
