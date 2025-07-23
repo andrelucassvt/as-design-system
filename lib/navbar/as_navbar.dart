@@ -120,7 +120,6 @@ class _AsNavbarState extends State<AsNavbar> {
                 key: const ValueKey('navbar'),
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   if (widget.floatingIconLeft != null) ...[
                     InkWell(
@@ -202,7 +201,7 @@ class _AsNavbarState extends State<AsNavbar> {
   }
 
   double _calcNavBarWidth(BuildContext context) {
-    const double itemWidth = 100;
+    const double itemWidth = 60;
     double extra = 0;
     if (widget.floatingIconLeft != null) {
       extra += 65;
@@ -214,7 +213,7 @@ class _AsNavbarState extends State<AsNavbar> {
   }
 
   Widget _buildNavBarContainer(BuildContext context) {
-    final bool expand = widget.navIcons.length > 3;
+    final bool expand = widget.navIcons.length > 2;
     final navBar = AsBaseContainer(
       padding: const EdgeInsets.all(5),
       enableBorder: widget.enableBorder,

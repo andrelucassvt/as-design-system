@@ -92,10 +92,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 //   icon: Icon(Icons.add),
                 //   onTap: () {},
                 // ),
-                // floatingIconRight: AsNavIcon(
-                //   icon: Icon(Icons.add),
-                //   onTap: () {},
-                // ),
+                floatingIconRight: AsNavIcon(
+                  icon: Icon(Icons.add),
+                  onTap: () {},
+                ),
                 navIcons: [
                   AsNavIcon(
                     title: 'Buttons',
@@ -115,15 +115,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     },
                   ),
-                  AsNavIcon(
-                    title: 'Novidades',
-                    icon: Icon(Icons.person),
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = 2;
-                      });
-                    },
-                  ),
+                  // AsNavIcon(
+                  //   title: 'Novidades',
+                  //   icon: Icon(Icons.person),
+                  //   onTap: () {
+                  //     setState(() {
+                  //       _selectedIndex = 2;
+                  //     });
+                  //   },
+                  // ),
                   // AsNavIcon(
                   //   title: 'Settings',
                   //   icon: Icon(Icons.settings),
