@@ -83,13 +83,15 @@ class _MyHomePageState extends State<MyHomePage> {
               alignment: Alignment.bottomLeft,
               child: AsNavbar(
                 key: Key('navbar $_selectedIndex'),
-                //height: 80,
-                width: MediaQuery.of(context).size.width - 50,
                 backgroundColor: Colors.blueAccent,
                 colorSelected: Colors.white,
                 indexSelected: _selectedIndex,
-                scrollController: _scrollControllers[_selectedIndex],
 
+                scrollController: _scrollControllers[_selectedIndex],
+                // floatingIconLeft: AsNavIcon(
+                //   icon: Icon(Icons.add),
+                //   onTap: () {},
+                // ),
                 // floatingIconRight: AsNavIcon(
                 //   icon: Icon(Icons.add),
                 //   onTap: () {},
@@ -122,15 +124,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     },
                   ),
-                  AsNavIcon(
-                    title: 'Settings',
-                    icon: Icon(Icons.settings),
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = 3;
-                      });
-                    },
-                  ),
+                  // AsNavIcon(
+                  //   title: 'Settings',
+                  //   icon: Icon(Icons.settings),
+                  //   onTap: () {
+                  //     setState(() {
+                  //       _selectedIndex = 3;
+                  //     });
+                  //   },
+                  // ),
                 ],
               ),
             ),
