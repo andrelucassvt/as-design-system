@@ -9,6 +9,7 @@ class AsNavbar extends StatefulWidget {
     super.key,
     required this.navIcons,
     required this.indexSelected,
+    this.floatingIconLeft,
     this.floatingIconRight,
     this.colorSelected,
     this.scrollController,
@@ -16,8 +17,10 @@ class AsNavbar extends StatefulWidget {
     this.padding,
     this.backgroundColor,
     this.colorItemSelected,
+    this.width,
   });
   final List<AsNavIcon> navIcons;
+  final AsNavIcon? floatingIconLeft;
   final AsNavIcon? floatingIconRight;
   final int indexSelected;
   final Color? colorSelected;
@@ -26,6 +29,7 @@ class AsNavbar extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final Color? backgroundColor;
   final Color? colorItemSelected;
+  final double? width;
 
   @override
   State<AsNavbar> createState() => _AsNavbarState();
@@ -62,119 +66,139 @@ class _AsNavbarState extends State<AsNavbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 10),
-      child: AnimatedSwitcher(
-        duration: Duration(milliseconds: 500),
-        switchInCurve: Curves.easeInCubic,
-        switchOutCurve: Curves.easeOutCubic,
-        transitionBuilder: (child, animation) {
-          return ScaleTransition(
-            scale: CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeInOutCubic,
-            ),
-            child: child,
-          );
-        },
-        child: isScroll
-            ? InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-
-                onTap: () {
-                  setState(() {
-                    isScroll = false;
-                  });
-                },
-                child: SizedBox(
-                  height: 75,
-                  child: Row(
-                    key: const ValueKey('floatingIcon'),
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AsBaseContainer(
-                        shape: BoxShape.circle,
-                        color: widget.backgroundColor,
-                        enableBorder: widget.enableBorder,
-                        elevation: 1,
-                        width: 50,
-                        height: 50,
-                        child: _iconBase(
-                          widget.navIcons[widget.indexSelected],
-                          size: 26,
+    return SizedBox(
+      width: widget.width,
+      height: 70,
+      child: Padding(
+        padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 10),
+        child: AnimatedSwitcher(
+          duration: Duration(milliseconds: 500),
+          switchInCurve: Curves.easeInCubic,
+          switchOutCurve: Curves.easeOutCubic,
+          transitionBuilder: (child, animation) {
+            return ScaleTransition(
+              scale: CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOutCubic,
+              ),
+              child: child,
+            );
+          },
+          child: isScroll
+              ? InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () {
+                    setState(() {
+                      isScroll = false;
+                    });
+                  },
+                  child: SizedBox(
+                    height: 75,
+                    child: Row(
+                      key: const ValueKey('floatingIcon'),
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AsBaseContainer(
+                          shape: BoxShape.circle,
+                          color: widget.backgroundColor,
+                          enableBorder: widget.enableBorder,
+                          elevation: 1,
+                          width: 50,
+                          height: 50,
+                          child: _iconBase(
+                            widget.navIcons[widget.indexSelected],
+                            size: 26,
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                )
+              : Row(
+                  key: const ValueKey('navbar'),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.floatingIconLeft != null) ...[
+                      InkWell(
+                        onTap: widget.floatingIconLeft!.onTap,
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        child: AsBaseContainer(
+                          shape: BoxShape.circle,
+                          width: 60,
+                          height: 60,
+                          elevation: 1,
+                          color: widget.backgroundColor,
+                          enableBorder: widget.enableBorder,
+                          child: _onTapIcon(widget.floatingIconLeft!),
                         ),
                       ),
-                      Spacer(),
+                      const SizedBox(width: 5),
                     ],
-                  ),
-                ),
-              )
-            : Row(
-                key: const ValueKey('navbar'),
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: AsBaseContainer(
-                      padding: const EdgeInsets.all(5),
-                      enableBorder: widget.enableBorder,
-                      elevation: 1,
-                      color: widget.backgroundColor,
-                      constraints: BoxConstraints(maxHeight: 70, minHeight: 70),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: widget.navIcons.asMap().entries.take(4).map((
-                          item,
-                        ) {
-                          final isSelected = item.key == widget.indexSelected;
-                          return Expanded(
-                            child: InkWell(
-                              onTap: item.value.onTap,
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              child: AsBaseContainer(
-                                padding: isSelected
-                                    ? const EdgeInsets.symmetric(
-                                        vertical: 10,
-                                        horizontal: 0,
-                                      )
-                                    : null,
-                                color: isSelected
-                                    ? widget.colorSelected ??
-                                          Colors.grey.withValues(alpha: .3)
-                                    : Colors.transparent,
-                                child: _onTapIcon(
-                                  item.value,
-                                  isSelected: isSelected,
-                                ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                  if (widget.floatingIconRight != null) ...[
-                    const SizedBox(width: 5),
-                    InkWell(
-                      onTap: widget.floatingIconRight!.onTap,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
+                    Expanded(
                       child: AsBaseContainer(
-                        shape: BoxShape.circle,
-                        width: 60,
-                        height: 60,
+                        padding: const EdgeInsets.all(5),
+                        enableBorder: widget.enableBorder,
                         elevation: 1,
                         color: widget.backgroundColor,
-                        enableBorder: widget.enableBorder,
-                        child: _onTapIcon(widget.floatingIconRight!),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: widget.navIcons.asMap().entries.take(4).map(
+                            (item) {
+                              final isSelected =
+                                  item.key == widget.indexSelected;
+                              return Expanded(
+                                child: InkWell(
+                                  onTap: item.value.onTap,
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  child: AsBaseContainer(
+                                    padding: isSelected
+                                        ? const EdgeInsets.symmetric(
+                                            vertical: 5,
+                                            horizontal: 0,
+                                          )
+                                        : null,
+                                    color: isSelected
+                                        ? widget.colorSelected ??
+                                              Colors.grey.withValues(alpha: .3)
+                                        : Colors.transparent,
+                                    child: _onTapIcon(
+                                      item.value,
+                                      isSelected: isSelected,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ).toList(),
+                        ),
                       ),
                     ),
+                    if (widget.floatingIconRight != null) ...[
+                      const SizedBox(width: 5),
+                      InkWell(
+                        onTap: widget.floatingIconRight!.onTap,
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        child: AsBaseContainer(
+                          shape: BoxShape.circle,
+                          width: 60,
+                          height: 60,
+                          elevation: 1,
+                          color: widget.backgroundColor,
+                          enableBorder: widget.enableBorder,
+                          child: _onTapIcon(widget.floatingIconRight!),
+                        ),
+                      ),
+                    ],
                   ],
-                ],
-              ),
+                ),
+        ),
       ),
     );
   }
@@ -185,7 +209,7 @@ class _AsNavbarState extends State<AsNavbar> {
         color: isSelected
             ? widget.colorItemSelected ?? AsColorBase.iconColor(context)
             : AsColorBase.iconColor(context),
-        size: size ?? (item.title != null ? 20 : 26),
+        size: size ?? 26,
       ),
       child: item.icon,
     );
@@ -206,7 +230,7 @@ class _AsNavbarState extends State<AsNavbar> {
               color: isSelected
                   ? widget.colorItemSelected ?? AsColorBase.textColor(context)
                   : AsColorBase.textColor(context),
-              fontSize: 12,
+              fontSize: 10,
             ),
           ),
       ],

@@ -80,13 +80,20 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           SafeArea(
             child: Align(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.bottomLeft,
               child: AsNavbar(
                 key: Key('navbar $_selectedIndex'),
+                //height: 80,
+                width: MediaQuery.of(context).size.width - 50,
                 backgroundColor: Colors.blueAccent,
                 colorSelected: Colors.white,
                 indexSelected: _selectedIndex,
                 scrollController: _scrollControllers[_selectedIndex],
+
+                // floatingIconRight: AsNavIcon(
+                //   icon: Icon(Icons.add),
+                //   onTap: () {},
+                // ),
                 navIcons: [
                   AsNavIcon(
                     title: 'Buttons',
@@ -115,15 +122,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     },
                   ),
-                  // AsNavIcon(
-                  //   title: 'Settings',
-                  //   icon: Icon(Icons.settings),
-                  //   onTap: () {
-                  //     setState(() {
-                  //       _selectedIndex = 3;
-                  //     });
-                  //   },
-                  // ),
+                  AsNavIcon(
+                    title: 'Settings',
+                    icon: Icon(Icons.settings),
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = 3;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
