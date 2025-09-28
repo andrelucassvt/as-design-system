@@ -18,6 +18,7 @@ class AsNavbar extends StatefulWidget {
     this.backgroundColor,
     this.colorItemSelected,
     this.width,
+    this.maxItems = 4,
   });
   final List<AsNavIcon> navIcons;
   final AsNavIcon? floatingIconLeft;
@@ -29,6 +30,7 @@ class AsNavbar extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final Color? backgroundColor;
   final Color? colorItemSelected;
+  final int maxItems;
 
   /// Apenas para o caso de ter menos de 4 itens no navbar
   final double? width;
@@ -222,7 +224,9 @@ class _AsNavbarState extends State<AsNavbar> {
       width: expand ? null : widget.width ?? _calcNavBarWidth(context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: widget.navIcons.asMap().entries.take(4).map((item) {
+        children: widget.navIcons.asMap().entries.take(widget.maxItems).map((
+          item,
+        ) {
           final isSelected = item.key == widget.indexSelected;
           return Expanded(
             child: InkWell(
